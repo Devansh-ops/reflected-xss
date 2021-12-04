@@ -21,7 +21,30 @@
 
   <!-- Custom CSS -->
   <link href="css/stylish-portfolio.min.css" rel="stylesheet">
+  <style>
+    input[type=text], select {
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
 
+    button[type=submit] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button[type=submit]:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 
 <body id="page-top">
@@ -30,14 +53,32 @@
   <header class="masthead d-flex">
     <div class="container text-center my-auto">
       <h1 class="mb-1">Demo of XSS against PHP</h1>
+      <!--
       <h3 class="mb-5">
         <em>See the readme.md file for details</em>
       </h3>
+--> 
+    <div>
+      <form onsubmit="return setcookie()">
+        <input type="text" id="name" name="name" placeholder="Cookie name">
+        <input type="text" id="value" name="value" placeholder="Cookie Value">
+        <br>
+        <button type="submit">Set cookie</button>
+      </form>
+      <script>
+        function setcookie(){
+          var name = document.getElementById('name').value;
+          var value = document.getElementById('value').value;
+
+          document.cookie =  name + "=" + (value || "")  + "; path=/";
+        }
+      </script>
+    </div>
     </div>
     <div class="overlay"></div>
   </header>
 
-  <!-- Stored XSS -->
+  <!-- Stored XSS 
   <section class="content-section bg-light" id="about">
     <div class="container text-center">
       <div class="row">
@@ -62,7 +103,7 @@
     </div>
   </section>
 
-    <!-- Reflected XSS -->
+     Reflected XSS -->
     <section class="content-section bg-light" id="about">
     <div class="container text-center">
       <div class="row">
